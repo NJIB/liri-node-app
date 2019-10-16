@@ -181,8 +181,8 @@ function call_spotify(songName) {
 
     var Spotify = require('node-spotify-api');
 
-    console.log('keys.spotify.id: '+ keys.spotify.id);
-    console.log('keys.spotify.secret: '+ keys.spotify.secret);
+    console.log('keys.spotify.id: ' + keys.spotify.id);
+    console.log('keys.spotify.secret: ' + keys.spotify.secret);
 
     var spotify = new Spotify(keys.spotify);
 
@@ -190,22 +190,35 @@ function call_spotify(songName) {
         .search({ type: 'track', query: songName })
         .then(function (response) {
 
-            // console.log(response.tracks);
+            console.log(response.tracks);
             // console.log("href: " + response.tracks.href);
-for (var i = 0; i < response.tracks.items.length; i++) {
+            for (var i = 0; i < response.tracks.items.length; i++) {
 
-            // console.log("Track name: " + response.tracks.album.name);
+                // console.log("Track name: " + response.tracks.album.name);
 
-            let item = response.tracks.items[i];
-                        item.artists.forEach(el => {
-                        console.log(el.name);
-            })
-            console.log("Artists: " + item.artists[0].name);
-            console.log("Album: " + response.tracks.items[i].album);
-            console.log("Preview: " + response.tracks.items[i].preview_url);
-           
+                let item = response.tracks.items[i];
+
+                //Logs all artist names for each item                
+                // console.log(`Artists:`);
+                // item.artists.forEach(el => {
+                //     console.log(`${el.name}`);
+                // })
+
+                // BACKUP CODE TO INSPECT OBJECT
+//                  let item = response.tracks.items[i];
+//             Object.keys(item.artists).forEach(el => {
+//                 console.log(el);
+
+
+                // console.log("Artists: " + item.artists[0].name);
+                console.log("ALBUM OBJECT:")
+                console.log(Object.keys(item.album));
+                // console.log("Album: " + item.album[0]);
+                console.log("Preview: " + response.tracks.items[i].preview_url);
+
+            }
         }
-        })
+        )
         .catch(function (err) {
             console.log(err);
         });
