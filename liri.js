@@ -1,25 +1,21 @@
 // Add code to read and set any environment variables with the dotenv package
 require("dotenv").config();
 
+// Load the NPM Package for Moment.js
 var moment = require("moment");
 
 // Add the code required to import the keys.js file and store it in a variable. */
 var keys = require("./keys.js");
 
-var $ = require("jquery");
-
-// You should then be able to access your keys information like so
-// var spotify = new Spotify(keys.spotify);
-
-/**Make it so liri.js can take in one of the following commands:
-		○ concert-this
-		○ spotify-this-song
-        ○ movie-this
-        ○ do-what-it-says
-*/
-
 // Load the NPM Package inquirer
 const inquirer = require('inquirer');
+
+// Variable to capture readFile output and feed to API caller
+var apiSelector = '';
+
+// Variable to capture readFile output and feed to API caller
+var searchCriteria = '';
+
 
 // Create a "Prompt" with a series of questions.
 inquirer
@@ -238,18 +234,32 @@ function call_random() {
 
     const fs = require('fs');
 
-    var content;
-
     fs.readFile('random.txt', function read(err, data) {
         if (err) {
             throw err;
         }
-        content = data;
+        var splitStr = data.toString().split(',');
+        console.log("splitStr: " + splitStr);
 
-        var splitStr = content.split(',');
-        var apiSelector = randomStr[0];
-        console.log(apiSelector);
+        apiSelector = splitStr[0];
+        console.log(`apiSelector: ${apiSelector}`);
+
+        searchCriteria = splitStr[1];
+        console.log(`searchCriteria: ${searchCriteria}`);
+
+        switch (apiSelector) {
+            case '1. Concerts (with Bands In Town)':
+                call_bandsintown(searchCriteria);
+                break;
+            case '2. Songs (with Spotify)':
+                call_spotify(searchCriteria);
+                break;
+            case '3. Movies (with OMDB)':
+                call_omdb(searchCriteria);
+                break;
+        }
     });
 
-    console.log("random.txt contents: " + content);
+
+    console.log("random.txt contents: " + data);
 }
