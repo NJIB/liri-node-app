@@ -131,9 +131,6 @@ function call_omdb(movie) {
             console.log(`Movies found matching ${movie} :`);
             console.log('');
 
-            console.log('MOVIE RESPONSE OBJECT:');
-            console.log(Object.keys(response.data));
-
             // Movie title
             console.log(`The movie's title is: ${response.data.Title}`);
 
