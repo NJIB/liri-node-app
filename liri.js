@@ -1,8 +1,8 @@
-// Add the code required to import the keys.js file and store it in a variable. */
-var keys = require("./keys.js");
-
 // Add code to read and set any environment variables with the dotenv package
 require("dotenv").config();
+
+// Add the code required to import the keys.js file and store it in a variable. */
+var keys = require("./keys.js");
 
 var $ = require("jquery");
 
@@ -16,32 +16,17 @@ var $ = require("jquery");
         ○ do-what-it-says
 */
 
-
-src = "call_spotify.js"
-src = "call_bandsintown.js"
-src = "call_omdb.js"
-// src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"
-
-
 // Load the NPM Package inquirer
 const inquirer = require('inquirer');
 
 // Create a "Prompt" with a series of questions.
 inquirer
     .prompt([
-        // First we will ask the user what they are looking for
-        // {
-        //     type: 'checkbox',
-        //     message: 'What are you searching for?',
-        //     name: 'checkListSelect',
-        //     choices: ['Concerts (with Bands In Town)', 'Songs (with Spotify)', 'Movies (with OMDB)', '... or Do What It Says (with Axios)'],
-        //     default: ['... or Do What It Says (with Axios)']
-        // },
         {
             type: 'list',
             message: 'What are you searching for?',
             name: 'searchType',
-            choices: ['1. Concerts (with Bands In Town)', '2. Songs (with Spotify)', '3. Movies (with OMDB)', '4. Do What It Says (with Axios)'],
+            choices: ['1. Concerts (with Bands In Town)', '2. Songs (with Spotify)', '3. Movies (with OMDB)', '4. Do What It Says'],
         },
         // Here we create a basic text prompt.
         {
@@ -53,52 +38,46 @@ inquirer
     .then(function (inquirerResponse) {
         switch (inquirerResponse.searchType) {
             case '1. Concerts (with Bands In Town)':
-                console.log("CASE 1 SELECTED");
-                console.log("inquirerResponse.searchType: " + inquirerResponse.searchType);
-                console.log("inquirerResponse.input: " + inquirerResponse.input);
                 call_bandsintown(inquirerResponse.input);
                 break;
             case '2. Songs (with Spotify)':
-                call_spotify(input);
+                call_spotify(inquirerResponse.input);
                 break;
             case '3. Movies (with OMDB)':
-                console.log("CASE 3 SELECTED");
-                console.log("inquirerResponse.searchType: " + inquirerResponse.searchType);
-                console.log("inquirerResponse.input: " + inquirerResponse.input);
                 call_omdb(inquirerResponse.input);
                 break;
-            case '4. Do What It Says (with Axios)':
-                call_axios();
+            case '4. Do What It Says':
+                call_random();
                 break;
         }
     });
 
 function call_bandsintown(artist) {
 
-    const bandsintown = '';
+    // Include the axios npm package (Don't forget to run "npm install axios" in this folder first!)
+    const axios = require('axios');
+
     const client_id = "codingbootcamp";
 
-    // Constructing a queryURL using the animal name
+    // Constructing a queryURL using the band name
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=" + client_id;
 
     console.log("queryURL: " + queryURL);
 
-    bandsintown.get(queryURL).then(
+    axios.get(queryURL).then(
         function (response) {
-            console.log(response);
 
             // Log required details for the artist searched
-            console.log(response.events.ArtistData.name);
+            console.log(`Artist: ${response.data[0].lineup} `);
+
             // Name of the venue
-            console.log(response.events.VenueData.name);
+            console.log(`Venue: ${response.data[0].venue.name}`);
 
             // Venue location
-            console.log(`City: 
-    ${response.events.VenueData.city}
-    `);
+            console.log(`City: ${response.data[0].venue.city}`);
 
             //Date of the event (formatted with Moment.js to MM/DD/YYYY)
-            console.log(response.events.EventData.datetime);
+            console.log(`Date: ${response.data[0].datetime}`);
 
             //ERROR CHECKING / VALIDATION?
         })
@@ -131,8 +110,17 @@ function call_omdb(movie) {
     // Include the axios npm package (Don't forget to run "npm install axios" in this folder first!)
     const axios = require('axios');
 
+    if (movie === '') {
+        movie = 'Mr. Nobody';
+    }
+
+    // Constructing a queryURL using the movie name
+    let queryURL = 'http://www.omdbapi.com/?t=' + encodeURIComponent(movie) + '&y=&plot=short&tomatoes=true&apikey=trilogy';
+
+    console.log("queryURL: " + queryURL);
+
     // Then run a request with axios to the OMDB API with the movie specified
-    axios.get('http://www.omdbapi.com/?t=' + movie + '&y=&plot=short&apikey=trilogy').then(
+    axios.get(queryURL).then(
         function (response) {
 
             // Movie title
@@ -145,7 +133,7 @@ function call_omdb(movie) {
             console.log(`The movie's rating is: ${response.data.imdbRating}`);
 
             // Rotten Tomatoes rating for the movie
-            console.log(`The movie's Rotten Tomatoes rating is: ${response.data.imdbRating} NEEDS TO BE FIXED!!!`);
+            console.log(`The movie's Rotten Tomatoes rating is: ${response.data.tomatoRating}`);
 
             // Country where the movie was produced
             console.log(`The movie was produced in: ${response.data.Country}`);
@@ -185,4 +173,60 @@ function call_omdb(movie) {
 
 }
 
+function call_spotify(songName) {
 
+    if (songName === '') {
+        songName = 'The Sign';
+    }
+
+    var Spotify = require('node-spotify-api');
+
+    console.log('keys.spotify.id: '+ keys.spotify.id);
+    console.log('keys.spotify.secret: '+ keys.spotify.secret);
+
+    var spotify = new Spotify(keys.spotify);
+
+    spotify
+        .search({ type: 'track', query: songName })
+        .then(function (response) {
+
+            // console.log(response.tracks);
+            // console.log("href: " + response.tracks.href);
+for (var i = 0; i < response.tracks.items.length; i++) {
+
+            // console.log("Track name: " + response.tracks.album.name);
+
+            let item = response.tracks.items[i];
+                        item.artists.forEach(el => {
+                        console.log(el.name);
+            })
+            console.log("Artists: " + item.artists[0].name);
+            console.log("Album: " + response.tracks.items[i].album);
+            console.log("Preview: " + response.tracks.items[i].preview_url);
+           
+        }
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+}
+
+function call_random() {
+
+    const fs = require('fs');
+
+    var content;
+
+    fs.readFile('random.txt', function read(err, data) {
+        if (err) {
+            throw err;
+        }
+        content = data;
+
+        var splitStr = content.split(',');
+        var apiSelector = randomStr[0];
+        console.log(apiSelector);
+    });
+
+    console.log("random.txt contents: " + content);
+}
