@@ -1,6 +1,8 @@
 // Add code to read and set any environment variables with the dotenv package
 require("dotenv").config();
 
+var moment = require("moment");
+
 // Add the code required to import the keys.js file and store it in a variable. */
 var keys = require("./keys.js");
 
@@ -67,6 +69,11 @@ function call_bandsintown(artist) {
     axios.get(queryURL).then(
         function (response) {
 
+            console.log('')
+            console.log(`Concerts found matching ${artist} :`);
+            console.log('');
+
+
             // Log required details for the artist searched
             console.log(`Artist: ${response.data[0].lineup} `);
 
@@ -77,7 +84,10 @@ function call_bandsintown(artist) {
             console.log(`City: ${response.data[0].venue.city}`);
 
             //Date of the event (formatted with Moment.js to MM/DD/YYYY)
-            console.log(`Date: ${response.data[0].datetime}`);
+            console.log(`Date: ${moment(response.data[0].datetime).format('l')}`);
+
+            console.log('')
+            console.log('==========================================================')
 
             //ERROR CHECKING / VALIDATION?
         })
@@ -117,11 +127,16 @@ function call_omdb(movie) {
     // Constructing a queryURL using the movie name
     let queryURL = 'http://www.omdbapi.com/?t=' + encodeURIComponent(movie) + '&y=&plot=short&tomatoes=true&apikey=trilogy';
 
-    console.log("queryURL: " + queryURL);
-
     // Then run a request with axios to the OMDB API with the movie specified
     axios.get(queryURL).then(
         function (response) {
+
+            console.log('')
+            console.log(`Movies found matching ${movie} :`);
+            console.log('');
+
+            console.log('MOVIE RESPONSE OBJECT:');
+            console.log(Object.keys(response.data));
 
             // Movie title
             console.log(`The movie's title is: ${response.data.Title}`);
@@ -147,6 +162,8 @@ function call_omdb(movie) {
             // Actors in the movie
             console.log(`The movie's stars the following actor(s): ${response.data.Actors}`);
 
+            console.log('')
+            console.log('==========================================================')
 
         }
     ).catch(function (error) {
@@ -181,41 +198,34 @@ function call_spotify(songName) {
 
     var Spotify = require('node-spotify-api');
 
-    console.log('keys.spotify.id: ' + keys.spotify.id);
-    console.log('keys.spotify.secret: ' + keys.spotify.secret);
-
     var spotify = new Spotify(keys.spotify);
 
     spotify
         .search({ type: 'track', query: songName })
         .then(function (response) {
 
-            console.log(response.tracks);
-            // console.log("href: " + response.tracks.href);
+            console.log('')
+            console.log(`Tracks found matching ${songName} :`);
+            console.log('');
+
             for (var i = 0; i < response.tracks.items.length; i++) {
 
-                // console.log("Track name: " + response.tracks.album.name);
-
                 let item = response.tracks.items[i];
+                console.log("Track: " + item.name);
 
-                //Logs all artist names for each item                
-                // console.log(`Artists:`);
-                // item.artists.forEach(el => {
-                //     console.log(`${el.name}`);
-                // })
+                console.log(`Artists:`);
+                item.artists.forEach(el => {
+                    console.log(`${el.name}`);
+                })
 
-                // BACKUP CODE TO INSPECT OBJECT
-//                  let item = response.tracks.items[i];
-//             Object.keys(item.artists).forEach(el => {
-//                 console.log(el);
-
-
-                // console.log("Artists: " + item.artists[0].name);
-                console.log("ALBUM OBJECT:")
-                console.log(Object.keys(item.album));
-                // console.log("Album: " + item.album[0]);
-                console.log("Preview: " + response.tracks.items[i].preview_url);
-
+                console.log("Album: " + item.album.name);
+                if (item.preview_url === null) {
+                    console.log("(Sorry, no preview available)");
+                } else {
+                    console.log("Preview: " + item.preview_url);
+                }
+                console.log('')
+                console.log('==========================================================')
             }
         }
         )
