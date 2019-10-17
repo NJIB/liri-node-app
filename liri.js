@@ -10,6 +10,25 @@ var keys = require("./keys.js");
 // Load the NPM Package inquirer
 const inquirer = require('inquirer');
 
+// Reference source code files
+var omdb = require("./call_omdb.js");
+var bandsitown = require("./call_bandsintown.js");
+var spotify = require("./call_spotify.js");
+var random = require("./call_random.js");
+
+// Object to store concert log data
+let logFile = {
+    line1: "",
+    line2: "",
+    line3: "",
+    line4: "",
+    line5: "",
+    line6: ""
+};
+
+let printList = [];
+let j = 0;
+
 // Variable to capture readFile output and feed to API caller
 var apiSelector = '';
 
@@ -66,26 +85,38 @@ function call_bandsintown(artist) {
         function (response) {
 
             console.log('')
-            console.log(`Concerts found matching ${artist} :`);
+            console.log(`Concerts found matching ${artist}:`);
             console.log('');
 
+            for (var i = 0; i < response.data.length; i++) {
 
-            // Log required details for the artist searched
-            console.log(`Artist: ${response.data[0].lineup} `);
+                // Log required details for the artist searched
+                console.log(`Artist: ${response.data[i].lineup} `);
+                logFile.line1 = "Artist: " + response.data[i].lineup + "\n";
 
-            // Name of the venue
-            console.log(`Venue: ${response.data[0].venue.name}`);
+                // Name of the venue
+                console.log(`Venue: ${response.data[i].venue.name}`);
+                logFile.line2 = "Venue: " + response.data[i].venue.name + "\n";
 
-            // Venue location
-            console.log(`City: ${response.data[0].venue.city}`);
+                // Venue location
+                console.log(`City: ${response.data[i].venue.city}`);
+                logFile.line3 = "City: " + response.data[i].venue.city + "\n";
 
-            //Date of the event (formatted with Moment.js to MM/DD/YYYY)
-            console.log(`Date: ${moment(response.data[0].datetime).format('l')}`);
+                //Date of the event (formatted with Moment.js to MM/DD/YYYY)
+                console.log(`Date: ${moment(response.data[i].datetime).format('l')}`);
+                logFile.line4 = "Date: " + moment(response.data[i].datetime).format('l') + "\n";
 
-            console.log('')
-            console.log('==========================================================')
+                //Date of the event (formatted with Moment.js to MM/DD/YYYY)
+                console.log(`Ticket sales start: ${moment(response.data[i].on_sale_datetime).format('l')}`);
+                logFile.line5 = "Ticket sales start: " + moment(response.data[i].on_sale_datetime).format('l') + "\n";
 
-            //ERROR CHECKING / VALIDATION?
+                console.log('')
+                console.log('==========================================================')
+                logFile.line6 = '========================================================== \n';
+
+                printList.push(logFile);
+            }
+            writeToFile(printList);
         })
 
         .catch(function (error) {
@@ -110,7 +141,6 @@ function call_bandsintown(artist) {
             console.log(error.config);
         });
 }
-
 
 function call_omdb(movie) {
     // Include the axios npm package (Don't forget to run "npm install axios" in this folder first!)
@@ -201,6 +231,8 @@ function call_spotify(songName) {
             console.log(`Tracks found matching ${songName} :`);
             console.log('');
 
+            console.log(Object.keys(response.tracks.items));
+
             for (var i = 0; i < response.tracks.items.length; i++) {
 
                 let item = response.tracks.items[i];
@@ -255,8 +287,28 @@ function call_random() {
                 call_omdb(searchCriteria);
                 break;
         }
+        writeToFile();
     });
+}
 
+function writeToFile(file) {
 
-    console.log("random.txt contents: " + data);
+    const fs = require('fs');
+
+    for (let j = 0; j < file.length; j++) {
+
+        fs.appendFile('./log.txt', (
+            '\n ' +
+            file[j].line1 +
+            file[j].line2 +
+            file[j].line3 +
+            file[j].line4 +
+            file[j].line5 +
+            file[j].line6
+        ),
+            (err) => {
+                if (err) throw err;
+                console.log('Records appended to file!');
+            });
+    }
 }

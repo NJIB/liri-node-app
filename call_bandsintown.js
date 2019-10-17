@@ -1,4 +1,5 @@
-function call_bandsintown(artist) {
+class bandsintown {
+call_bandsintown(artist) {
 
     // Include the axios npm package (Don't forget to run "npm install axios" in this folder first!)
     const axios = require('axios');
@@ -17,23 +18,27 @@ function call_bandsintown(artist) {
             console.log(`Concerts found matching ${artist} :`);
             console.log('');
 
+            for (var i = 0; i < response.data.length; i++) {
 
             // Log required details for the artist searched
-            console.log(`Artist: ${response.data[0].lineup} `);
+            console.log(`Artist: ${response.data[i].lineup} `);
 
             // Name of the venue
-            console.log(`Venue: ${response.data[0].venue.name}`);
+            console.log(`Venue: ${response.data[i].venue.name}`);
 
             // Venue location
-            console.log(`City: ${response.data[0].venue.city}`);
+            console.log(`City: ${response.data[i].venue.city}`);
 
             //Date of the event (formatted with Moment.js to MM/DD/YYYY)
-            console.log(`Date: ${moment(response.data[0].datetime).format('l')}`);
+            console.log(`Date: ${moment(response.data[i].datetime).format('l')}`);
+
+            //Date of the event (formatted with Moment.js to MM/DD/YYYY)
+            console.log(`Ticket sales start: ${moment(response.data[i].on_sale_datetime).format('l')}`);
 
             console.log('')
             console.log('==========================================================')
+        }
 
-            //ERROR CHECKING / VALIDATION?
         })
 
         .catch(function (error) {
@@ -57,4 +62,6 @@ function call_bandsintown(artist) {
             }
             console.log(error.config);
         });
+}
+
 }

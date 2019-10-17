@@ -1,55 +1,43 @@
-function callAPI(destCity, fromDate, tillDate, eventType) {
+function call_spotify(songName) {
 
-    var clientID = "MTg1ODQzODR8MTU2OTM2NjgzOC4zNQ";
+    if (songName === '') {
+        songName = 'The Sign';
+    }
 
-    // Constructing a queryURL using the animal name
-    var queryURL = "https://api.seatgeek.com/2/events?venue.city=" +
-        encodeURIComponent(destCity) +
-        "&datetime_utc.gte=" + fromDate +
-        "&datetime_utc.lte=" + tillDate +
-        "&taxonomies.name=" + eventType +
-        "&per_page=25" +
-        "&client_id=" + clientID;
+    var Spotify = require('node-spotify-api');
 
-    console.log("queryURL: " + queryURL);
+    var spotify = new Spotify(keys.spotify);
 
-    // Performing an AJAX request with the queryURL
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    })
-        // After data comes back from the request
+    spotify
+        .search({ type: 'track', query: songName })
         .then(function (response) {
 
-            $("#box-ent").html("");
-            console.log(response);
-            var eventsP = $("<p>");
+            console.log('')
+            console.log(`Tracks found matching ${songName} :`);
+            console.log('');
 
-            // Write list of concerts to the DOM
-            $(eventsP).append("<button id='concertList'>Concerts</button>");
-            $(eventsP).append("<button id='theaterList'>Theater</button>");
-            $(eventsP).append("<button id='sportsList'>Sports</button>");
-            if (response.events.length === 0) {
-                $(eventsP).append("<br/>" + "Sorry - no " + eventType.toLowerCase() + " events found for these dates.");
-            } else {
-                $(eventsP).append("<br/>" + eventType + " events while you are there:");
-                for (var i = 0; i < response.events.length; i++) {
-                    if (response.events[i].performers[0].image === null) {
-                        $(eventsP).append("<br/>" + "<img width=30 height=30 src = 'assets/images/SuitCase.png'" + ">");
-                    } else {
-                        $(eventsP).append("<br/>" + "<img width=30 height=30 src = " + response.events[i].performers[0].image + ">");
-                    }
-                    $(eventsP).append("  " +
-                        response.events[i].datetime_local.substr(5, 2) +
-                        "/" +
-                        response.events[i].datetime_local.substr(8, 2) +
-                        ": " +
-                        response.events[i].title);
-                };
+            for (var i = 0; i < response.tracks.items.length; i++) {
+
+                let item = response.tracks.items[i];
+                console.log("Track: " + item.name);
+
+                console.log(`Artists:`);
+                item.artists.forEach(el => {
+                    console.log(`${el.name}`);
+                })
+
+                console.log("Album: " + item.album.name);
+                if (item.preview_url === null) {
+                    console.log("(Sorry, no preview available)");
+                } else {
+                    console.log("Preview: " + item.preview_url);
+                }
+                console.log('')
+                console.log('==========================================================')
             }
-
-            $("#box-ent").prepend(eventsP);
-
+        }
+        )
+        .catch(function (err) {
+            console.log(err);
         });
 }
-
