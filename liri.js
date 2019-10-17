@@ -16,18 +16,7 @@ var bandsitown = require("./call_bandsintown.js");
 var spotify = require("./call_spotify.js");
 var random = require("./call_random.js");
 
-// Object to store concert log data
-let logFile = {
-    line1: "",
-    line2: "",
-    line3: "",
-    line4: "",
-    line5: "",
-    line6: ""
-};
-
 let printList = [];
-let j = 0;
 
 // Variable to capture readFile output and feed to API caller
 var apiSelector = '';
@@ -61,7 +50,7 @@ inquirer
                 call_spotify(inquirerResponse.input);
                 break;
             case '3. Movies (with OMDB)':
-                call_omdb(inquirerResponse.input);
+                omdb.omdb(inquirerResponse.input);
                 break;
             case '4. Do What It Says':
                 call_random();
@@ -89,7 +78,7 @@ function call_bandsintown(artist) {
             console.log('');
 
             for (var i = 0; i < response.data.length; i++) {
-
+                let logFile = {};
                 // Log required details for the artist searched
                 console.log(`Artist: ${response.data[i].lineup} `);
                 logFile.line1 = "Artist: " + response.data[i].lineup + "\n";
@@ -111,13 +100,13 @@ function call_bandsintown(artist) {
                 console.log(`Ticket sales start: ${moment(response.data[i].on_sale_datetime).format('l')}`);
                 logFile.line5 = "Ticket sales start: " + moment(response.data[i].on_sale_datetime).format('l') + "\n";
 
-                console.log('')
+              
                 console.log('==========================================================')
                 logFile.line6 = '========================================================== \n';
 
                 printList.push(logFile);
             }
-            writeToFile(printList);
+            writeToFile(printList,0);
         })
 
         .catch(function (error) {
@@ -141,77 +130,6 @@ function call_bandsintown(artist) {
             }
             console.log(error.config);
         });
-}
-
-function call_omdb(movie) {
-    // Include the axios npm package (Don't forget to run "npm install axios" in this folder first!)
-    const axios = require('axios');
-
-    if (movie === '') {
-        movie = 'Mr. Nobody';
-    }
-
-    // Constructing a queryURL using the movie name
-    let queryURL = 'http://www.omdbapi.com/?t=' + encodeURIComponent(movie) + '&y=&plot=short&tomatoes=true&apikey=trilogy';
-
-    // Then run a request with axios to the OMDB API with the movie specified
-    axios.get(queryURL).then(
-        function (response) {
-
-            console.log('')
-            console.log(`Movies found matching ${movie} :`);
-            console.log('');
-
-            // Movie title
-            console.log(`The movie's title is: ${response.data.Title}`);
-
-            // Year the movie came out
-            console.log(`The year the movie was released is: ${response.data.Year}`);
-
-            // IMDB rating for the movie
-            console.log(`The movie's rating is: ${response.data.imdbRating}`);
-
-            // Rotten Tomatoes rating for the movie
-            console.log(`The movie's Rotten Tomatoes rating is: ${response.data.tomatoRating}`);
-
-            // Country where the movie was produced
-            console.log(`The movie was produced in: ${response.data.Country}`);
-
-            // Language of the movie
-            console.log(`The movie's language is: ${response.data.Language}`);
-
-            //Plot of the movie
-            console.log(`The movie's plot is: ${response.data.Plot}`);
-
-            // Actors in the movie
-            console.log(`The movie's stars the following actor(s): ${response.data.Actors}`);
-
-            console.log('')
-            console.log('==========================================================')
-
-        }
-    ).catch(function (error) {
-        if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log('---------------Data---------------');
-            console.log(error.response.data);
-            console.log('---------------Status---------------');
-            console.log(error.response.status);
-            console.log('---------------Status---------------');
-            console.log(error.response.headers);
-        } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an object that comes back with details
-            // pertaining to the error that occurred.
-            console.log(error.request);
-        } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-        }
-        console.log(error.config);
-    });
-
 }
 
 function call_spotify(songName) {
@@ -292,24 +210,32 @@ function call_random() {
     });
 }
 
-function writeToFile(file) {
+async function writeToFile(file, k) {
+    console.log(file[0].line2);
+    console.log(file[0].line3);
+    console.log(file[2].line2);
+    console.log(file[2].line3);
 
     const fs = require('fs');
 
-    for (let j = 0; j < file.length; j++) {
-
-        fs.appendFile('./log.txt', (
+    if (k >= file.length) {
+        return; } else {
+        await fs.appendFile('./log.txt', (
             '\n ' +
-            file[j].line1 +
-            file[j].line2 +
-            file[j].line3 +
-            file[j].line4 +
-            file[j].line5 +
-            file[j].line6
+            file[k].line1 +
+            file[k].line2 +
+            file[k].line3 +
+            file[k].line4 +
+            file[k].line5 +
+            file[k].line6
         ),
             (err) => {
                 if (err) throw err;
                 console.log('Records appended to file!');
             });
-    }
+            k++;
+            console.log("k: " + k,file[k].line2);
+            writeToFile(file, k);
+        }
+
 }

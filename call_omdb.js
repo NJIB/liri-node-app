@@ -68,3 +68,5 @@ function call_omdb(movie) {
     });
 
 }
+
+module.exports = {omdb:(movie) => call_omdb(movie)};
