@@ -106,6 +106,7 @@ function call_bandsintown(artist) {
                 console.log(`Date: ${moment(response.data[i].datetime).format('l')}`);
                 logFile.line4 = "Date: " + moment(response.data[i].datetime).format('l') + "\n";
 
+
                 //Date of the event (formatted with Moment.js to MM/DD/YYYY)
                 console.log(`Ticket sales start: ${moment(response.data[i].on_sale_datetime).format('l')}`);
                 logFile.line5 = "Ticket sales start: " + moment(response.data[i].on_sale_datetime).format('l') + "\n";
