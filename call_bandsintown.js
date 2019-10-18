@@ -1,8 +1,10 @@
-class bandsintown {
-call_bandsintown(artist) {
+function call_bandsintown(artist) {
 
     // Include the axios npm package (Don't forget to run "npm install axios" in this folder first!)
     const axios = require('axios');
+
+    // Load the NPM Package for Moment.js
+    var moment = require("moment");
 
     const client_id = "codingbootcamp";
 
@@ -15,30 +17,38 @@ call_bandsintown(artist) {
         function (response) {
 
             console.log('')
-            console.log(`Concerts found matching ${artist} :`);
+            console.log(`Concerts found matching ${artist}:`);
             console.log('');
 
             for (var i = 0; i < response.data.length; i++) {
+                let logFile = {};
+                // Log required details for the artist searched
+                console.log(`Artist: ${response.data[i].lineup} `);
+                logFile.line1 = "Artist: " + response.data[i].lineup + "\n";
 
-            // Log required details for the artist searched
-            console.log(`Artist: ${response.data[i].lineup} `);
+                // Name of the venue
+                console.log(`Venue: ${response.data[i].venue.name}`);
+                logFile.line2 = "Venue: " + response.data[i].venue.name + "\n";
 
-            // Name of the venue
-            console.log(`Venue: ${response.data[i].venue.name}`);
+                // Venue location
+                console.log(`City: ${response.data[i].venue.city}`);
+                logFile.line3 = "City: " + response.data[i].venue.city + "\n";
 
-            // Venue location
-            console.log(`City: ${response.data[i].venue.city}`);
+                //Date of the event (formatted with Moment.js to MM/DD/YYYY)
+                console.log(`Date: ${moment(response.data[i].datetime).format('l')}`);
+                logFile.line4 = "Date: " + moment(response.data[i].datetime).format('l') + "\n";
 
-            //Date of the event (formatted with Moment.js to MM/DD/YYYY)
-            console.log(`Date: ${moment(response.data[i].datetime).format('l')}`);
 
-            //Date of the event (formatted with Moment.js to MM/DD/YYYY)
-            console.log(`Ticket sales start: ${moment(response.data[i].on_sale_datetime).format('l')}`);
+                //Date of the event (formatted with Moment.js to MM/DD/YYYY)
+                console.log(`Ticket sales start: ${moment(response.data[i].on_sale_datetime).format('l')}`);
+                logFile.line5 = "Ticket sales start: " + moment(response.data[i].on_sale_datetime).format('l') + "\n";
 
-            console.log('')
-            console.log('==========================================================')
-        }
+                console.log('==========================================================')
+                logFile.line6 = '========================================================== \n';
 
+                printList.push(logFile);
+            }
+            writeToFile(printList, 0);
         })
 
         .catch(function (error) {
@@ -64,4 +74,4 @@ call_bandsintown(artist) {
         });
 }
 
-}
+module.exports = { bandsintown: (artist) => call_bandsintown(artist) };

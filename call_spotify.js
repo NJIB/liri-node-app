@@ -1,5 +1,8 @@
 function call_spotify(songName) {
 
+// Add the code required to import the keys.js file and store it in a variable. */
+var keys = require("./keys.js");
+
     if (songName === '') {
         songName = 'The Sign';
     }
@@ -41,3 +44,5 @@ function call_spotify(songName) {
             console.log(err);
         });
 }
+
+module.exports = {spotify:(songName) => call_spotify(songName)};

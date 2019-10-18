@@ -1,9 +1,6 @@
 // Add code to read and set any environment variables with the dotenv package
 require("dotenv").config();
 
-// Load the NPM Package for Moment.js
-var moment = require("moment");
-
 // Add the code required to import the keys.js file and store it in a variable. */
 var keys = require("./keys.js");
 
@@ -11,9 +8,9 @@ var keys = require("./keys.js");
 const inquirer = require('inquirer');
 
 // Reference source code files
-var omdb = require("./call_omdb.js");
-var bandsitown = require("./call_bandsintown.js");
-var spotify = require("./call_spotify.js");
+var movieSearch = require("./call_omdb.js");
+var bandSearch = require("./call_bandsintown.js");
+var songSearch = require("./call_spotify.js");
 var random = require("./call_random.js");
 
 let printList = [];
@@ -44,13 +41,14 @@ inquirer
     .then(function (inquirerResponse) {
         switch (inquirerResponse.searchType) {
             case '1. Concerts (with Bands In Town)':
-                call_bandsintown(inquirerResponse.input);
-                break;
+                // call_bandsintown(inquirerResponse.input);
+                bandSearch.bandsintown(inquirerResponse.input);
             case '2. Songs (with Spotify)':
-                call_spotify(inquirerResponse.input);
+                // call_spotify(inquirerResponse.input);
+                songSearch.spotify(inquirerResponse.input);
                 break;
             case '3. Movies (with OMDB)':
-                omdb.omdb(inquirerResponse.input);
+                movieSearch.omdb(inquirerResponse.input);
                 break;
             case '4. Do What It Says':
                 call_random();
@@ -100,13 +98,12 @@ function call_bandsintown(artist) {
                 console.log(`Ticket sales start: ${moment(response.data[i].on_sale_datetime).format('l')}`);
                 logFile.line5 = "Ticket sales start: " + moment(response.data[i].on_sale_datetime).format('l') + "\n";
 
-              
                 console.log('==========================================================')
                 logFile.line6 = '========================================================== \n';
 
                 printList.push(logFile);
             }
-            writeToFile(printList,0);
+            writeToFile(printList, 0);
         })
 
         .catch(function (error) {
@@ -132,51 +129,6 @@ function call_bandsintown(artist) {
         });
 }
 
-function call_spotify(songName) {
-
-    if (songName === '') {
-        songName = 'The Sign';
-    }
-
-    var Spotify = require('node-spotify-api');
-
-    var spotify = new Spotify(keys.spotify);
-
-    spotify
-        .search({ type: 'track', query: songName })
-        .then(function (response) {
-
-            console.log('')
-            console.log(`Tracks found matching ${songName} :`);
-            console.log('');
-
-            console.log(Object.keys(response.tracks.items));
-
-            for (var i = 0; i < response.tracks.items.length; i++) {
-
-                let item = response.tracks.items[i];
-                console.log("Track: " + item.name);
-
-                console.log(`Artists:`);
-                item.artists.forEach(el => {
-                    console.log(`${el.name}`);
-                })
-
-                console.log("Album: " + item.album.name);
-                if (item.preview_url === null) {
-                    console.log("(Sorry, no preview available)");
-                } else {
-                    console.log("Preview: " + item.preview_url);
-                }
-                console.log('')
-                console.log('==========================================================')
-            }
-        }
-        )
-        .catch(function (err) {
-            console.log(err);
-        });
-}
 
 function call_random() {
 
@@ -211,15 +163,12 @@ function call_random() {
 }
 
 async function writeToFile(file, k) {
-    console.log(file[0].line2);
-    console.log(file[0].line3);
-    console.log(file[2].line2);
-    console.log(file[2].line3);
 
     const fs = require('fs');
 
     if (k >= file.length) {
-        return; } else {
+        return;
+    } else {
         await fs.appendFile('./log.txt', (
             '\n ' +
             file[k].line1 +
@@ -233,9 +182,9 @@ async function writeToFile(file, k) {
                 if (err) throw err;
                 console.log('Records appended to file!');
             });
-            k++;
-            console.log("k: " + k,file[k].line2);
-            writeToFile(file, k);
-        }
+        k++;
+        console.log("k: " + k, file[k].line2);
+        writeToFile(file, k);
+    }
 
 }
