@@ -1,5 +1,12 @@
 function call_random() {
 
+    // Variable to capture readFile output and feed to API caller
+    let apiSelector = '';
+
+    // Variable to capture readFile output and feed to API caller
+    let searchCriteria = '';
+
+
     const fs = require('fs');
 
     fs.readFile('random.txt', function read(err, data) {
@@ -17,17 +24,17 @@ function call_random() {
 
         switch (apiSelector) {
             case '1. Concerts (with Bands In Town)':
-                call_bandsintown(searchCriteria);
-                break;
+                bandSearch.bandsintown(searchCriteria);
             case '2. Songs (with Spotify)':
-                call_spotify(searchCriteria);
+                songSearch.spotify(searchCriteria);
                 break;
             case '3. Movies (with OMDB)':
-                call_omdb(searchCriteria);
+                movieSearch.omdb(searchCriteria);
                 break;
         }
+        writeToFile();
     });
-
-
-    console.log("random.txt contents: " + data);
 }
+
+module.exports = { whatItSays: () => call_random() };
+

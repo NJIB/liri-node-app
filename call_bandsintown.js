@@ -4,7 +4,11 @@ function call_bandsintown(artist) {
     const axios = require('axios');
 
     // Load the NPM Package for Moment.js
-    var moment = require("moment");
+    const moment = require('moment');
+
+    let printList = [];
+    var textOutput = require("./writeToFile.js");
+
 
     const client_id = "codingbootcamp";
 
@@ -48,7 +52,9 @@ function call_bandsintown(artist) {
 
                 printList.push(logFile);
             }
-            writeToFile(printList, 0);
+            textOutput.logOutput(printList, 0);
+
+            // writeToFile(printList, 0);
         })
 
         .catch(function (error) {
