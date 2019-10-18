@@ -6,6 +6,9 @@ function call_random() {
     // Variable to capture readFile output and feed to API caller
     let searchCriteria = '';
 
+    let movieSearch = require("./call_omdb.js");
+    let bandSearch = require("./call_bandsintown.js");
+    let songSearch = require("./call_spotify.js");
 
     const fs = require('fs');
 
@@ -32,7 +35,6 @@ function call_random() {
                 movieSearch.omdb(searchCriteria);
                 break;
         }
-        writeToFile();
     });
 }
 
