@@ -28,6 +28,7 @@ function call_random() {
         switch (apiSelector) {
             case '1. Concerts (with Bands In Town)':
                 bandSearch.bandsintown(searchCriteria);
+                break;
             case '2. Songs (with Spotify)':
                 songSearch.spotify(searchCriteria);
                 break;
