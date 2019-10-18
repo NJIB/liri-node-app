@@ -33,6 +33,7 @@ inquirer
         switch (inquirerResponse.searchType) {
             case '1. Concerts (with Bands In Town)':
                 bandSearch.bandsintown(inquirerResponse.input);
+                break;
             case '2. Songs (with Spotify)':
                 songSearch.spotify(inquirerResponse.input);
                 break;
