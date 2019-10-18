@@ -3,6 +3,7 @@ async function writeToFile(file, k) {
     const fs = require('fs');
 
     if (k >= file.length) {
+        console.log(k + ' records added to log.txt!');
         return;
     } else {
         await fs.appendFile('./log.txt', (
@@ -16,10 +17,8 @@ async function writeToFile(file, k) {
         ),
             (err) => {
                 if (err) throw err;
-                console.log('Records appended to file!');
             });
         k++;
-        console.log("k: " + k, file[k].line2);
         writeToFile(file, k);
     }
 
