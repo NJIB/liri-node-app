@@ -6,9 +6,9 @@ function call_bandsintown(artist) {
     // Load the NPM Package for Moment.js
     const moment = require('moment');
 
+    // For writing to text file
     let printList = [];
     var textOutput = require("./writeToFile.js");
-
 
     const client_id = "codingbootcamp";
 
@@ -25,7 +25,10 @@ function call_bandsintown(artist) {
             console.log('');
 
             for (var i = 0; i < response.data.length; i++) {
+
+                //Object to hold information to be written to text file
                 let logFile = {};
+
                 // Log required details for the artist searched
                 console.log(`Artist: ${response.data[i].lineup} `);
                 logFile.line1 = "Artist: " + response.data[i].lineup + "\n";
@@ -54,7 +57,6 @@ function call_bandsintown(artist) {
             }
             textOutput.logOutput(printList, 0);
 
-            // writeToFile(printList, 0);
         })
 
         .catch(function (error) {

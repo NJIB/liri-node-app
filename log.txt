@@ -376,3 +376,226 @@ City: Mumbai
 Date: 12/15/2019
 Ticket sales start: Invalid date
 ========================================================== 
+
+ Artist: U2,Noel Gallagher And The High Flying Birds
+Venue: Mt Smart Stadium
+City: Auckland
+Date: 11/8/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher And The High Flying Birds
+Venue: Mt Smart Stadium
+City: Auckland
+Date: 11/9/2019
+Ticket sales start: 6/17/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher's High Flying Birds
+Venue: Marvel Stadium
+City: Docklands
+Date: 11/15/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher's High Flying Birds
+Venue: Optus Stadium
+City: Burswood
+Date: 11/27/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2
+Venue: National Stadium, Singapore Sports Hub
+City: Singapore
+Date: 11/30/2019
+Ticket sales start: Invalid date
+========================================================== 
+
+ Artist: U2
+Venue: D.Y. Patil Stadium
+City: Mumbai
+Date: 12/15/2019
+Ticket sales start: Invalid date
+========================================================== 
+
+ The movie's title is: Star Wars: Episode IV - A New Hope + 
+undefinedundefinedundefinedundefinedundefined
+ The movie's title is: Jurassic Park + '
+'undefinedundefinedundefinedundefinedundefined
+ The movie's title is: Star Wars: Episode IV - A New Hope + '
+'The year the movie was released is: 1977The movie's rating is: 8.6The movie's Rotten Tomatoes rating is: N/AThe movie was produced in: USAThe movie's language is: English
+ Artist: U2,Noel Gallagher And The High Flying Birds
+Venue: Mt Smart Stadium
+City: Auckland
+Date: 11/8/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher And The High Flying Birds
+Venue: Mt Smart Stadium
+City: Auckland
+Date: 11/9/2019
+Ticket sales start: 6/17/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher's High Flying Birds
+Venue: Marvel Stadium
+City: Docklands
+Date: 11/15/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2
+Venue: National Stadium, Singapore Sports Hub
+City: Singapore
+Date: 11/30/2019
+Ticket sales start: Invalid date
+========================================================== 
+
+ Artist: U2,Noel Gallagher's High Flying Birds
+Venue: Optus Stadium
+City: Burswood
+Date: 11/27/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2
+Venue: D.Y. Patil Stadium
+City: Mumbai
+Date: 12/15/2019
+Ticket sales start: Invalid date
+========================================================== 
+
+ Artist: U2,Noel Gallagher And The High Flying Birds
+Venue: Mt Smart Stadium
+City: Auckland
+Date: 11/8/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher And The High Flying Birds
+Venue: Mt Smart Stadium
+City: Auckland
+Date: 11/9/2019
+Ticket sales start: 6/17/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher's High Flying Birds
+Venue: Marvel Stadium
+City: Docklands
+Date: 11/15/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher's High Flying Birds
+Venue: Optus Stadium
+City: Burswood
+Date: 11/27/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2
+Venue: National Stadium, Singapore Sports Hub
+City: Singapore
+Date: 11/30/2019
+Ticket sales start: Invalid date
+========================================================== 
+
+ Artist: U2
+Venue: D.Y. Patil Stadium
+City: Mumbai
+Date: 12/15/2019
+Ticket sales start: Invalid date
+========================================================== 
+
+ Artist: U2,Noel Gallagher And The High Flying Birds
+Venue: Mt Smart Stadium
+City: Auckland
+Date: 11/8/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher's High Flying Birds
+Venue: Marvel Stadium
+City: Docklands
+Date: 11/15/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher And The High Flying Birds
+Venue: Mt Smart Stadium
+City: Auckland
+Date: 11/9/2019
+Ticket sales start: 6/17/2019
+========================================================== 
+
+ Artist: U2
+Venue: National Stadium, Singapore Sports Hub
+City: Singapore
+Date: 11/30/2019
+Ticket sales start: Invalid date
+========================================================== 
+
+ Artist: U2,Noel Gallagher's High Flying Birds
+Venue: Optus Stadium
+City: Burswood
+Date: 11/27/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2
+Venue: D.Y. Patil Stadium
+City: Mumbai
+Date: 12/15/2019
+Ticket sales start: Invalid date
+========================================================== 
+
+ Artist: U2,Noel Gallagher And The High Flying Birds
+Venue: Mt Smart Stadium
+City: Auckland
+Date: 11/8/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher And The High Flying Birds
+Venue: Mt Smart Stadium
+City: Auckland
+Date: 11/9/2019
+Ticket sales start: 6/17/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher's High Flying Birds
+Venue: Marvel Stadium
+City: Docklands
+Date: 11/15/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2,Noel Gallagher's High Flying Birds
+Venue: Optus Stadium
+City: Burswood
+Date: 11/27/2019
+Ticket sales start: 6/11/2019
+========================================================== 
+
+ Artist: U2
+Venue: National Stadium, Singapore Sports Hub
+City: Singapore
+Date: 11/30/2019
+Ticket sales start: Invalid date
+========================================================== 
+
+ Artist: U2
+Venue: D.Y. Patil Stadium
+City: Mumbai
+Date: 12/15/2019
+Ticket sales start: Invalid date
+========================================================== 
+
+ The movie's title is: Star Wars: Episode IV - A New Hope + '
+'The year the movie was released is: 1977The movie's rating is: 8.6The movie's Rotten Tomatoes rating is: N/AThe movie was produced in: USAThe movie's language is: English
+ The movie's title is: Star Wars: Episode IV - A New Hope + '
+'The year the movie was released is: 1977The movie's rating is: 8.6The movie's Rotten Tomatoes rating is: N/AThe movie was produced in: USAThe movie's language is: English
+ The movie's title is: Cars + '
+'The year the movie was released is: 2006The movie's rating is: 7.1The movie's Rotten Tomatoes rating is: N/AThe movie was produced in: USAThe movie's language is: English, Italian, Japanese, YiddishThe movie's plot is: A hot-shot race-car named Lightning McQueen gets waylaid in Radiator Springs, where he finds the true meaning of friendship and family.The movie's stars the following actor(s): Owen Wilson, Paul Newman, Bonnie Hunt, Larry the Cable Guy==========================================================
